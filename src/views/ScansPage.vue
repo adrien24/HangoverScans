@@ -40,6 +40,7 @@ import { ScansController } from '@/components/Modules/Scans/Controllers/scans.co
 import { getAllScans } from '@/components/Modules/Scans/services/scans.services'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import type { Swiper as SwiperTypes } from 'swiper/types'
 import { Keyboard, Zoom } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/zoom'
@@ -57,7 +58,7 @@ onMounted(async () => {
   await controller.setup()
 })
 
-const handleSlide = (event: any) => {
+const handleSlide = (event: SwiperTypes) => {
   activeIndex.value = event.activeIndex
 }
 </script>
