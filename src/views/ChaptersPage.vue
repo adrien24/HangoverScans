@@ -1,6 +1,5 @@
 <template>
   <div class="scanPage">
-    <div class="scanPage_return"><img :src="returnArrow" class="scanPage_return" /></div>
     <div class="scanPage_style">Shonen</div>
     <h1>One Piece</h1>
     <div class="scanPage_release">22 juillet 1997</div>
@@ -17,11 +16,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import RETURN_ARROW from '@/assets/img/icons/return-arrow.svg'
-
-const returnArrow = RETURN_ARROW
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .scanPage {

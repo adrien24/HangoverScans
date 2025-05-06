@@ -1,9 +1,1 @@
-self.addEventListener('push', function (event) {
-  const data = event.data?.json() || {}
-  const title = data.title || 'Notification'
-  const options = {
-    body: data.body || '',
-    icon: '/icons/icon-192x192.png',
-  }
-  event.waitUntil(self.registration.showNotification(title, options))
-})
+if(!self.define){let e,i={};const s=(s,n)=>(s=new URL(s+".js",n).href,i[s]||new Promise((i=>{if("document"in self){const e=document.createElement("script");e.src=s,e.onload=i,document.head.appendChild(e)}else e=s,importScripts(s),i()})).then((()=>{let e=i[s];if(!e)throw new Error(`Module ${s} didn’t register its module`);return e})));self.define=(n,r)=>{const o=e||("document"in self?document.currentScript.src:"")||location.href;if(i[o])return;let c={};const t=e=>s(e,o),l={module:{uri:o},exports:c,require:t};i[o]=Promise.all(n.map((e=>l[e]||t(e)))).then((e=>(r(...e),c)))}}define(["./workbox-1504e367"],(function(e){"use strict";self.skipWaiting(),e.clientsClaim(),e.precacheAndRoute([{url:"assets/browser-B78BoxRz.js",revision:null},{url:"assets/index-B3GyhMOA.js",revision:null},{url:"assets/index-Cb5DmZTX.css",revision:null},{url:"index.html",revision:"5b33b3c31e8fcec5e108efd1dfc0a670"},{url:"registerSW.js",revision:"1872c500de691dce40960bb85481de07"},{url:"icons/icon-192x192.png",revision:"1490d8a0729fa81c307cb163f1997d0a"},{url:"icons/icon-512x512.png",revision:"1490d8a0729fa81c307cb163f1997d0a"},{url:"manifest.webmanifest",revision:"fc04339f6fbffb4d18cb6038d11bb7fc"}],{}),e.cleanupOutdatedCaches(),e.registerRoute(new e.NavigationRoute(e.createHandlerBoundToURL("index.html"))),e.registerRoute(/^https:\/\/your-api\.domain\/.*$/,new e.NetworkFirst({cacheName:"api-cache",plugins:[]}),"GET")}));
