@@ -3,16 +3,12 @@
 type Chapter = {
   id: number
   title: string
-  description: string
-  images: string[]
 }
 
 export class ScansController {
   public scans: Chapter = {
     id: 0,
     title: '',
-    description: '',
-    images: [],
   }
   public isReading: boolean = false
 
@@ -27,7 +23,6 @@ export class ScansController {
 
   async setup() {
     this.scans = await this.getChapter()
-    this.imagesScans = this.scans.images
     this.titleScan = this.scans.title
   }
 }
