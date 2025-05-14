@@ -60,6 +60,8 @@ onMounted(async () => {
 
 const handleSlide = (event: SwiperTypes) => {
   activeIndex.value = event.activeIndex
+  // const chapiterNumber = parseInt(route.params.id as string)
+  // controller.updateHistoryPages('OnePiece', chapiterNumber, activeIndex.value)
 }
 </script>
 

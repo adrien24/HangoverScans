@@ -9,6 +9,7 @@ import Components from 'unplugin-vue-components/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/' : '/',
   plugins: [
     vue(),
     vueDevTools(),
@@ -26,8 +27,9 @@ export default defineConfig({
         enabled: true, // pour tester le SW en développement
       },
       manifest: {
-        name: 'Mon App Manga',
-        short_name: 'Manga',
+        name: 'Hangover Scans',
+        short_name: 'Hangover Scans',
+        description: 'Une application pour lire des scans de mangas',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',

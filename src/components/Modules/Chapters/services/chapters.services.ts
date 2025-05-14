@@ -8,7 +8,5 @@ export const getAllChapters = async () => {
   })
 
   const result = await response.json()
-  console.log(result.data)
-
   return result.data
 }

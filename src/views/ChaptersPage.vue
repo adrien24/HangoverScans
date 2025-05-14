@@ -16,7 +16,15 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  document.addEventListener('contextmenu', function (e) {
+    console.log('Context menu disabled')
+  })
+})
+</script>
 
 <style lang="scss" scoped>
 .scanPage {
