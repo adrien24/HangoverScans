@@ -14,6 +14,7 @@ export class ChapterRowController {
   public chapters: Chapter[] = []
   public chapitersFilter: Chapter[][] = []
   public chapitersFiltered: Chapter[] = []
+  public isLoaded: boolean = false
 
   public selectedChapters: selectedChapter[] = []
 
@@ -25,10 +26,10 @@ export class ChapterRowController {
 
   async setup() {
     this.chapters = await this.getAllChapters()
-    this.chapitersFilter = this.chunkArray(this.chapters, 50).reverse()
-
+    this.chapitersFilter = this.chunkArray(this.chapters, 50)
     this.selectedChaptersArray()
-    this.chapitersFiltered = this.chapitersFilter[0].reverse()
+    this.chapitersFiltered = this.chapitersFilter[0]
+    this.isLoaded = true
   }
 
   private chunkArray(array: Chapter[], size: number) {
@@ -36,7 +37,7 @@ export class ChapterRowController {
     for (let i = 0; i < array.length; i += size) {
       result.push(array.slice(i, i + size))
     }
-    return result
+    return result.reverse()
   }
 
   public selectedChaptersArray() {
@@ -46,7 +47,7 @@ export class ChapterRowController {
         if (j % 50 === 0) {
           this.selectedChapters.push({
             value: i,
-            label: `${this.chapitersFilter[i][j].id} > ${this.chapitersFilter[i][j].id + 50}`,
+            label: `${this.chapitersFilter[i][j].id} > ${this.chapitersFilter[i][j].id + 49}`,
           })
         }
       }
@@ -54,6 +55,7 @@ export class ChapterRowController {
   }
 
   public updateSelectedChapters(chapter: selectedChapter) {
-    this.chapitersFiltered = this.chapitersFilter[chapter.value]
+    const selectedChunk = this.chapitersFilter[chapter.value]
+    this.chapitersFiltered = [...selectedChunk].sort((a, b) => b.id - a.id)
   }
 }

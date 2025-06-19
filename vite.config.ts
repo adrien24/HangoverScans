@@ -21,10 +21,10 @@ export default defineConfig({
       dts: true, // génère un fichier de types (utile pour TypeScript)
     }),
     VitePWA({
-      registerType: 'autoUpdate',
-
+      registerType: 'prompt',
       devOptions: {
         enabled: true, // pour tester le SW en développement
+        type: 'module',
       },
       manifest: {
         name: 'Hangover Scans',
@@ -48,6 +48,9 @@ export default defineConfig({
         ],
       },
       workbox: {
+        skipWaiting: false,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/your-api\.domain\/.*$/,

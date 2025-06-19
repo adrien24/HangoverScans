@@ -1,6 +1,9 @@
 <template>
   <div class="chapter">
     <div class="chapter_header">
+      <template v-for="skeleton in 1" :key="skeleton">
+        <Skeleton height="2.8rem" class="mb-2" v-if="!controller.isLoaded"></Skeleton>
+      </template>
       <DsMultiselect
         v-if="controller.selectedChapters.length > 0"
         :options="controller.selectedChapters"
@@ -14,10 +17,13 @@
     </div>
 
     <div class="chaptersRow">
+      <template v-for="skeleton in 5" :key="skeleton">
+        <Skeleton height="2.8rem" class="mb-2" v-if="!controller.isLoaded"></Skeleton>
+      </template>
       <div
         class="chapterRow"
         v-for="chapter in controller.chapitersFiltered"
-        :key="chapter.id"
+        :key="chapter.title"
         :id="String(chapter.id)"
         @click="goToScans(chapter.id)"
       >
@@ -33,8 +39,8 @@ import { onMounted, reactive } from 'vue'
 import { ChapterRowController } from './Controllers/chapterRow.controller'
 import { getAllChapters } from './services/chapters.services'
 import DsMultiselect from '@/components/DsSystem/DsMultiselect.vue'
+import Skeleton from 'primevue/skeleton'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 
 const controller = reactive(new ChapterRowController(() => getAllChapters()))

@@ -1,21 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useDevToolsBlocker } from '@/useDevToolsBlocker'
-
-const { enable } = useDevToolsBlocker({ redirectUrl: '/bloque' })
-
-onMounted(() => {
-  console.log('App mounted')
-
-  enable()
-  document.addEventListener('contextmenu', function (e) {
-    console.log('Context menu disabled')
-  })
-})
+import UpdateBanner from '@/components/DsSystem/DsUpdateBanner.vue'
 </script>
 
 <template>
+  <!-- updated 2 -->
   <RouterView />
+  <UpdateBanner />
 </template>
 
 <style lang="scss">

@@ -9,11 +9,13 @@
       </div>
     </div>
     <swiper
+      v-if="pages !== null"
       :modules="[Keyboard, Zoom]"
       :keyboard="{ enabled: true }"
       :loop="false"
       :spaceBetween="10"
       :slidesPerView="1"
+      :initialSlide="pages"
       :zoom="true"
       class="reader"
       @click="controller.isReading = !controller.isReading"
@@ -53,13 +55,16 @@ const returnArrow = RETURN_ARROW
 const activeIndex = ref(0)
 
 const controller = reactive(new ScansController(() => getAllScans(id, scans)))
+const pages = ref<number | null>(null)
 
 onMounted(async () => {
   await controller.setup()
+  pages.value = controller.setPagesScans('OnePiece', parseInt(id))
 })
 
 const handleSlide = (event: SwiperTypes) => {
   activeIndex.value = event.activeIndex
+  controller.updateHistoryPages('OnePiece', parseInt(id), activeIndex.value)
   // const chapiterNumber = parseInt(route.params.id as string)
   // controller.updateHistoryPages('OnePiece', chapiterNumber, activeIndex.value)
 }

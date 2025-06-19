@@ -31,47 +31,28 @@ export class ScansController {
     this.scans = await this.getChapter()
     this.imagesScans = this.scans.images
     this.titleScan = this.scans.title
-
-    this.getHistoryPages('OnePiece', this.scans.id)
   }
 
-  public getHistoryPages(nameScan: string, chapter: number) {
-    const history = localStorage.getItem(`history-${nameScan}`)
+  public updateHistoryPages(nameScan: string, chapter: number, pages: number) {
+    const history = localStorage.getItem(`scans-${nameScan}`)
     if (history) this.historyParsed = JSON.parse(history)
-    else {
-      this.historyParsed = [
-        {
-          chapter: chapter,
-          pages: 0,
-        },
-      ]
-      localStorage.setItem(`history-${nameScan}`, JSON.stringify(this.historyParsed))
+
+    const index = this.historyParsed.findIndex((item) => item.chapter === chapter)
+
+    if (index !== -1) {
+      this.historyParsed[index].pages = pages
+    } else {
+      this.historyParsed.push({ chapter, pages: pages })
     }
+    localStorage.setItem(`scans-${nameScan}`, JSON.stringify(this.historyParsed))
   }
 
-  // public updateHistoryPages(nameScan: string, chapter: number, pages: number) {
-  //   this.historyParsed.find((history) => history.chapter === chapter)?.pages = pages
-  //   console.log('existingHistory', existingHistory)
+  public setPagesScans(nameScan: string, chapter: number) {
+    const history = localStorage.getItem(`scans-${nameScan}`)
+    if (history) this.historyParsed = JSON.parse(history)
 
-  //   if (existingHistory) {
-  //     this.historyParsed = [
-  //       ...this.historyParsed,
-  //       {
-  //         chapter: chapter,
-  //         pages: pages,
-  //       },
-  //     ]
-  //   } else {
-  //     this.historyParsed = [
-  //       ...this.historyParsed,
-  //       {
-  //         chapter: chapter,
-  //         pages: pages,
-  //       },
-  //     ]
-  //   }
-  //   localStorage.setItem(`history-${nameScan}`, JSON.stringify(this.historyParsed))
+    const index = this.historyParsed.findIndex((item) => item.chapter === chapter)
 
-  //   console.log('historyParsed', this.historyParsed)
-  // }
+    return this.historyParsed[index] ? this.historyParsed[index].pages : 0
+  }
 }
