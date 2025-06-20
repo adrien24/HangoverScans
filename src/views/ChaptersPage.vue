@@ -19,15 +19,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-onMounted(() => {
-  document.addEventListener('contextmenu', function (e) {
-    console.log('Context menu disabled')
-  })
-})
+onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
 .scanPage {
+  position: relative;
+  z-index: 1;
   padding: 60px 25px;
 
   &_style {

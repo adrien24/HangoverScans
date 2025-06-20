@@ -16,7 +16,7 @@ export class ScansController {
   }
   public isReading: boolean = false
 
-  public imagesScans: string[] = []
+  public imagesScans: { url: string; loaded: boolean }[] = []
   public titleScan: string = ''
 
   public getChapter: () => Promise<Chapter> // ou le bon type de retour
@@ -29,7 +29,10 @@ export class ScansController {
 
   async setup() {
     this.scans = await this.getChapter()
-    this.imagesScans = this.scans.images
+
+    this.imagesScans = this.scans.images.map((img) => ({ url: img, loaded: false }))
+    console.log(this.imagesScans)
+
     this.titleScan = this.scans.title
   }
 

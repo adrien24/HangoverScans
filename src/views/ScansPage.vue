@@ -1,13 +1,24 @@
 <template>
-  <div class="scans" v-if="controller.imagesScans.length > 0">
+  <div class="scans">
     <div class="scans_return" v-if="!controller.isReading">
       <img :src="returnArrow" @click="$router.go(-1)" />
     </div>
-    <div v-if="!controller.isReading" :class="{ fadeOut: controller.isReading }">
-      <div class="scans_title">
-        One Piece {{ controller.titleScan !== 'Nom à venir' ? `: ${controller.titleScan}` : '' }}
+    <div :class="{ fadeOut: controller.isReading }" v-if="!controller.isReading">
+      <div class="scans_title" v-if="controller.titleScan">
+        {{
+          controller.titleScan !== 'Nom à venir'
+            ? `One Piece : ${controller.titleScan}`
+            : 'One Piece'
+        }}
       </div>
+      <div class="scans_title" v-else>One Piece</div>
     </div>
+    <Skeleton
+      height="28rem"
+      class="scans-skeleton"
+      style="width: 80%; text-align: center; aspect-ratio: 2 / 3"
+      v-if="!isLoaded"
+    ></Skeleton>
     <swiper
       v-if="pages !== null"
       :modules="[Keyboard, Zoom]"
@@ -23,12 +34,22 @@
       @slideChange="handleSlide"
     >
       <swiper-slide v-for="(page, index) in controller.imagesScans" :key="index">
-        <div class="swiper-zoom-container">
-          <img :src="page" class="page-image" />
+        <div class="swiper-zoom-container" v-if="page.loaded">
+          <img
+            :src="page.url"
+            class="page-image"
+            :alt="`OnePiece page ${index}`"
+            @load="onImageLoaded"
+          />
         </div>
       </swiper-slide>
     </swiper>
-    <div v-if="!controller.isReading" class="scans_pages">
+    <div
+      v-if="
+        controller.imagesScans && activeIndex && controller.imagesScans && !controller.isReading
+      "
+      class="scans_pages"
+    >
       {{ activeIndex + 1 }} / {{ controller.imagesScans.length }}
     </div>
   </div>
@@ -40,6 +61,7 @@ import { useRoute } from 'vue-router'
 import { onMounted, reactive, ref } from 'vue'
 import { ScansController } from '@/components/Modules/Scans/Controllers/scans.controller'
 import { getAllScans } from '@/components/Modules/Scans/services/scans.services'
+import Skeleton from 'primevue/skeleton'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Swiper as SwiperTypes } from 'swiper/types'
@@ -57,10 +79,33 @@ const activeIndex = ref(0)
 const controller = reactive(new ScansController(() => getAllScans(id, scans)))
 const pages = ref<number | null>(null)
 
+const isLoaded = ref(false)
+
 onMounted(async () => {
   await controller.setup()
   pages.value = controller.setPagesScans('OnePiece', parseInt(id))
+  controller.imagesScans.forEach((image, index) => {
+    const img = new Image()
+    img.src = image.url
+
+    img.onload = () => {
+      if (controller.imagesScans[index]) {
+        controller.imagesScans[index].loaded = true // Assure la réactivité si 'loaded' est défini dans l'objet
+      }
+      if (controller.imagesScans.every((page) => page.loaded)) {
+        isLoaded.value = true
+      }
+    }
+
+    img.onerror = () => {
+      console.error(`Erreur lors du chargement de l'image ${index + 1}`)
+    }
+  })
 })
+
+const onImageLoaded = () => {
+  isLoaded.value = true
+}
 
 const handleSlide = (event: SwiperTypes) => {
   activeIndex.value = event.activeIndex
@@ -73,6 +118,11 @@ const handleSlide = (event: SwiperTypes) => {
 <style lang="scss">
 .scans {
   min-height: 100vh;
+  position: relative;
+
+  &-skeleton {
+    margin: 10% auto 0 auto;
+  }
 
   &_title {
     font-size: $fs-xl;

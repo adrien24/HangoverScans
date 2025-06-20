@@ -2,10 +2,10 @@
   <div v-if="showBanner" class="update-banner">
     <div class="update-banner__content">
       <div class="update-banner__message">
-        <h3>🚀 Nouvelle version disponible</h3>
+        <h3>🚀 Nouvelle version disponible {{ version }}</h3>
+
         <ul class="update-banner__changelog">
-          <li>✨ Ajout du marque page</li>
-          <li>⚡ Amélioration des performances</li>
+          <li v-for="(feature, index) in changelog" :key="index">{{ feature }}</li>
         </ul>
       </div>
       <button class="update-banner__button" @click="update">Mettre à jour</button>
@@ -19,10 +19,20 @@ import { useRegisterSW } from 'virtual:pwa-register/vue'
 
 const { needRefresh, updateServiceWorker } = useRegisterSW()
 const showBanner = ref(false)
+const changelog = ref<string[]>([])
+const version = ref<string>()
 
-watchEffect(() => {
+watchEffect(async () => {
   if (needRefresh.value) {
     showBanner.value = true
+    try {
+      const response = await fetch('/changelog.json', { cache: 'no-store' })
+      const data = await response.json()
+      changelog.value = data.features
+      version.value = data.version
+    } catch (error) {
+      console.error('Erreur de chargement du changelog :', error)
+    }
   }
 })
 

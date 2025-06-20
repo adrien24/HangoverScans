@@ -67,20 +67,22 @@ const goToScans = (chapterId: number) => {
     justify-content: flex-start;
     align-items: center;
     padding: 10px 20px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
+    background-color: #0f223b;
+    border-radius: 7px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border: #213170 0.1px solid;
     cursor: pointer;
     gap: 10px;
 
     &__number {
       font-weight: bold;
       font-size: 1em;
-      color: #333;
+      color: #f0f3fa;
     }
 
     &__title {
       font-size: 1em;
-      color: #333;
+      color: #f0f3fa;
       white-space: nowrap; // empêche le retour à la ligne
       overflow: hidden; // cache le texte qui dépasse
       text-overflow: ellipsis; // affiche "…" à la fin si le texte est trop long
