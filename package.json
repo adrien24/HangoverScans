@@ -19,6 +19,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@primeuix/themes": "^1.1.2",
     "@supabase/supabase-js": "^2.49.4",
     "dotenv": "^16.5.0",

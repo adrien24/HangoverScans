@@ -37,6 +37,7 @@ export class ChapterRowController {
     for (let i = 0; i < array.length; i += size) {
       result.push(array.slice(i, i + size))
     }
+
     return result.reverse()
   }
 
@@ -56,6 +57,6 @@ export class ChapterRowController {
 
   public updateSelectedChapters(chapter: selectedChapter) {
     const selectedChunk = this.chapitersFilter[chapter.value]
-    this.chapitersFiltered = [...selectedChunk].sort((a, b) => b.id - a.id)
+    this.chapitersFiltered = [...selectedChunk]
   }
 }

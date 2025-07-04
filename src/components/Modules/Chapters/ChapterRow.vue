@@ -21,14 +21,17 @@
         <Skeleton height="2.8rem" class="mb-2" v-if="!controller.isLoaded"></Skeleton>
       </template>
       <div
-        class="chapterRow"
-        v-for="chapter in controller.chapitersFiltered"
+        class="chapterRow_chapter chapterRow"
+        v-for="chapter in controller.chapitersFiltered.sort((a, b) => b.id - a.id)"
         :key="chapter.title"
         :id="String(chapter.id)"
         @click="goToScans(chapter.id)"
       >
-        <div class="chapterRow__number">{{ chapter.id }}</div>
-        <div class="chapterRow__title">{{ chapter.title }}</div>
+        <div class="chapterRow_row">
+          <div class="chapterRow__number">{{ chapter.id }}</div>
+          <div class="chapterRow__title">{{ chapter.title }}</div>
+        </div>
+        <font-awesome-icon :icon="['fas', 'check']" />
       </div>
     </div>
   </div>
@@ -64,7 +67,7 @@ const goToScans = (chapterId: number) => {
 
   .chapterRow {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background-color: #0f223b;
@@ -74,19 +77,27 @@ const goToScans = (chapterId: number) => {
     cursor: pointer;
     gap: 10px;
 
-    &__number {
-      font-weight: bold;
-      font-size: 1em;
-      color: #f0f3fa;
+    &_chapter {
+      display: flex;
+      &__number {
+        font-weight: bold;
+        font-size: 1em;
+        color: #f0f3fa;
+      }
+
+      &__title {
+        font-size: 1em;
+        color: #f0f3fa;
+        white-space: nowrap; // empêche le retour à la ligne
+        overflow: hidden; // cache le texte qui dépasse
+        text-overflow: ellipsis; // affiche "…" à la fin si le texte est trop long
+        max-width: 100%;
+      }
     }
 
-    &__title {
-      font-size: 1em;
-      color: #f0f3fa;
-      white-space: nowrap; // empêche le retour à la ligne
-      overflow: hidden; // cache le texte qui dépasse
-      text-overflow: ellipsis; // affiche "…" à la fin si le texte est trop long
-      max-width: 100%;
+    &_row {
+      display: flex;
+      gap: 15px;
     }
   }
 }
