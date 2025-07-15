@@ -46,7 +46,10 @@
     </swiper>
     <div
       v-if="
-        controller.imagesScans && activeIndex && controller.imagesScans && !controller.isReading
+        controller.imagesScans &&
+        activeIndex >= 0 &&
+        controller.imagesScans &&
+        !controller.isReading
       "
       class="scans_pages"
     >
