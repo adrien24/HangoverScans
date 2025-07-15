@@ -59,4 +59,20 @@ export class ChapterRowController {
     const selectedChunk = this.chapitersFilter[chapter.value]
     this.chapitersFiltered = [...selectedChunk]
   }
+
+  public isChapterFinished(chapterId: number): boolean {
+    const chapterStorage = JSON.parse(localStorage.getItem(`scans-OnePiece`) || '[]')
+    return chapterStorage.some(
+      (res: { chapter: number; pages: number; finished: 'reading' | 'read' }) =>
+        res.chapter === chapterId && res.finished === 'read',
+    )
+  }
+
+  public isChapterUnread(chapterId: number): boolean {
+    const chapterStorage = JSON.parse(localStorage.getItem(`scans-OnePiece`) || '[]')
+    return !chapterStorage.some(
+      (res: { chapter: number; pages: number; finished: 'reading' | 'read' }) =>
+        res.chapter === chapterId && (res.finished === 'reading' || res.finished === 'read'),
+    )
+  }
 }

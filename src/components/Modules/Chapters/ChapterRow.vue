@@ -31,7 +31,13 @@
           <div class="chapterRow__number">{{ chapter.id }}</div>
           <div class="chapterRow__title">{{ chapter.title }}</div>
         </div>
-        <font-awesome-icon :icon="['fas', 'check']" />
+        <font-awesome-icon
+          :icon="['fas', 'check']"
+          :class="{
+            finished: controller.isChapterFinished(chapter.id),
+            unread: controller.isChapterUnread(chapter.id),
+          }"
+        />
       </div>
     </div>
   </div>
@@ -100,5 +106,13 @@ const goToScans = (chapterId: number) => {
       gap: 15px;
     }
   }
+}
+
+.finished {
+  color: #00ff0084;
+  font-size: 1.2em;
+}
+.unread {
+  display: none;
 }
 </style>

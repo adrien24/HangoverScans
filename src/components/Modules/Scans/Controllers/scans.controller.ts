@@ -21,7 +21,11 @@ export class ScansController {
 
   public getChapter: () => Promise<Chapter> // ou le bon type de retour
 
-  private historyParsed: { chapter: number; pages: number }[] = []
+  private historyParsed: {
+    chapter: number
+    pages: number
+    finished: 'reading' | 'read'
+  }[] = []
 
   constructor(getAllScans: () => Promise<Chapter>) {
     this.getChapter = getAllScans
@@ -31,12 +35,15 @@ export class ScansController {
     this.scans = await this.getChapter()
 
     this.imagesScans = this.scans.images.map((img) => ({ url: img, loaded: false }))
-    console.log(this.imagesScans)
-
     this.titleScan = this.scans.title
   }
 
-  public updateHistoryPages(nameScan: string, chapter: number, pages: number) {
+  public updateHistoryPages(
+    nameScan: string,
+    chapter: number,
+    pages: number,
+    finished: 'reading' | 'read' = 'reading',
+  ) {
     const history = localStorage.getItem(`scans-${nameScan}`)
     if (history) this.historyParsed = JSON.parse(history)
 
@@ -44,8 +51,9 @@ export class ScansController {
 
     if (index !== -1) {
       this.historyParsed[index].pages = pages
+      this.historyParsed[index].finished = finished
     } else {
-      this.historyParsed.push({ chapter, pages: pages })
+      this.historyParsed.push({ chapter, pages, finished })
     }
     localStorage.setItem(`scans-${nameScan}`, JSON.stringify(this.historyParsed))
   }

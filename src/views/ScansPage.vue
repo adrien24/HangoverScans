@@ -109,9 +109,9 @@ const onImageLoaded = () => {
 
 const handleSlide = (event: SwiperTypes) => {
   activeIndex.value = event.activeIndex
-  controller.updateHistoryPages('OnePiece', parseInt(id), activeIndex.value)
-  // const chapiterNumber = parseInt(route.params.id as string)
-  // controller.updateHistoryPages('OnePiece', chapiterNumber, activeIndex.value)
+  const finished = controller.imagesScans.length - 1 === activeIndex.value ? 'read' : 'reading'
+
+  controller.updateHistoryPages('OnePiece', parseInt(id), activeIndex.value, finished)
 }
 </script>
 
