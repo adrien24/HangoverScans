@@ -1,14 +1,14 @@
 <template>
   <div class="scanPage">
-    <div class="scanPage_style">Shonen</div>
+    <span class="scanPage_style">Shonen</span>
     <h1>One Piece</h1>
-    <div class="scanPage_release">22 juillet 1997</div>
+    <span class="scanPage_release">22 juillet 1997</span>
 
-    <div class="scanPage_synopsis">
+    <p class="scanPage_synopsis">
       Luffy, un jeune garçon, rêve de devenir le Roi des Pirates en trouvant le One Piece, le trésor
       ultime rassemblé par Gol D. Roger, le seul pirate à avoir jamais porté le titre de Roi des
       Pirates.
-    </div>
+    </p>
 
     <div class="scanPage_chapters">
       <ChapterRow />
@@ -44,13 +44,6 @@ onMounted(() => {})
       width: 30px;
       height: 30px;
     }
-  }
-
-  h1 {
-    font-family: 'Anton', sans-serif;
-    font-weight: 400;
-    font-size: $fs-big;
-    font-style: normal;
   }
 
   &_release {

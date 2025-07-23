@@ -5,9 +5,10 @@ serve(async (req) => {
   const { headers } = setupHeaders(req)
 
   const pageId = await req.headers.get('X-Page-Id')
+  const scanTitle = await req.headers.get('X-Scan-title')
   const id = parseInt(pageId)
 
-  const { data, error } = await supabase.from('OnePiece').select('*').eq('id', id).single()
+  const { data, error } = await supabase.from(scanTitle).select('*').eq('chapter', id).single()
 
   return new Response(JSON.stringify({ data, error }), {
     headers: headers,

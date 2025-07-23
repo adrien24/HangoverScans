@@ -1,7 +1,7 @@
 // chapterRow.controller.ts
 
 type Chapter = {
-  id: number
+  chapter: number
   title: string
 }
 
@@ -48,7 +48,7 @@ export class ChapterRowController {
         if (j % 50 === 0) {
           this.selectedChapters.push({
             value: i,
-            label: `${this.chapitersFilter[i][j].id} > ${this.chapitersFilter[i][j].id + 49}`,
+            label: `${this.chapitersFilter[i][j].chapter} > ${this.chapitersFilter[i][j].chapter + 49}`,
           })
         }
       }

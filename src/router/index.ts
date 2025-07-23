@@ -1,7 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import ChaptersPage from '../views/ChaptersPage.vue'
-import ScansPage from '../views/ScansPage.vue'
-import TooManyRequests from '@/views/TooManyRequests.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -9,17 +6,18 @@ const router = createRouter({
     {
       path: '/',
       name: 'ChaptersPage',
-      component: ChaptersPage,
+      component: () => import(/* webpackChunkName: "chapters" */ '../views/ChaptersPage.vue'),
     },
     {
       path: '/scans/:scans/:id',
       name: 'ScansPage',
-      component: ScansPage,
+      component: () => import(/* webpackChunkName: "scans" */ '../views/ScansPage.vue'),
     },
     {
       path: '/TooManyRequests',
       name: 'TooManyRequests',
-      component: TooManyRequests,
+      component: () =>
+        import(/* webpackChunkName: "TooManyRequests" */ '../views/TooManyRequests.vue'),
     },
   ],
 })

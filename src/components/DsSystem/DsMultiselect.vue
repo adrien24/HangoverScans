@@ -2,7 +2,6 @@
   <multiselect
     v-model="selected"
     :options="options"
-    :multiple="false"
     :searchable="false"
     track-by="value"
     :custom-label="customLabel"
@@ -40,7 +39,7 @@ const props = defineProps({
 const selected = ref({ value: props.options[0].value, label: props.options[0].label })
 
 const customLabel = (option: { value: number; label: string }) => {
-  return `chapitres : ${option.label}`
+  return `Chapitres : ${option.label}`
 }
 </script>
 

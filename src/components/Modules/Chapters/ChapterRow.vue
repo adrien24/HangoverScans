@@ -10,7 +10,6 @@
         id="chapters"
         name="Selectionner le chapitre"
         label="Sélectionner le chapitre"
-        :multiple="true"
         @update:modelValue="controller.updateSelectedChapters($event)"
       />
       <h3>Chapitres</h3>
@@ -22,20 +21,20 @@
       </template>
       <div
         class="chapterRow_chapter chapterRow"
-        v-for="chapter in controller.chapitersFiltered.sort((a, b) => b.id - a.id)"
+        v-for="chapter in controller.chapitersFiltered.sort((a, b) => b.chapter - a.chapter)"
         :key="chapter.title"
-        :id="String(chapter.id)"
-        @click="goToScans(chapter.id)"
+        :id="String(chapter.chapter)"
+        @click="goToScans('One Piece', chapter.chapter)"
       >
         <div class="chapterRow_row">
-          <div class="chapterRow__number">{{ chapter.id }}</div>
-          <div class="chapterRow__title">{{ chapter.title }}</div>
+          <p class="chapterRow__number">{{ chapter.chapter }}</p>
+          <p class="chapterRow__title">{{ chapter.title }}</p>
         </div>
         <font-awesome-icon
           :icon="['fas', 'check']"
           :class="{
-            finished: controller.isChapterFinished(chapter.id),
-            unread: controller.isChapterUnread(chapter.id),
+            finished: controller.isChapterFinished(chapter.chapter),
+            unread: controller.isChapterUnread(chapter.chapter),
           }"
         />
       </div>
@@ -58,9 +57,9 @@ onMounted(async () => {
   await controller.setup()
 })
 
-const goToScans = (chapterId: number) => {
+const goToScans = (title: string, id: number) => {
   router.push({
-    path: `/scans/OnePiece/${chapterId}`,
+    path: `/scans/${title}/${id}`,
   })
 }
 </script>
