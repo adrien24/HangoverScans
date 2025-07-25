@@ -1,14 +1,14 @@
 <template>
   <div class="scanPage">
-    <span class="scanPage_style">Shonen</span>
-    <h1>One Piece</h1>
-    <span class="scanPage_release">22 juillet 1997</span>
+    <div class="scanPage_header">
+      <span class="scanPage_style">Shonen</span>
+      <img :src="returnArrow" @click="$router.go(-1)" />
+    </div>
 
-    <p class="scanPage_synopsis">
-      Luffy, un jeune garçon, rêve de devenir le Roi des Pirates en trouvant le One Piece, le trésor
-      ultime rassemblé par Gol D. Roger, le seul pirate à avoir jamais porté le titre de Roi des
-      Pirates.
-    </p>
+    <h1>{{ title }}</h1>
+    <span class="scanPage_release">date de parution à venir</span>
+
+    <p class="scanPage_synopsis">Description à venir</p>
 
     <div class="scanPage_chapters">
       <ChapterRow />
@@ -17,16 +17,34 @@
 </template>
 
 <script setup lang="ts">
+import RETURN_ARROW from '@/assets/img/icons/return-arrow.svg'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+const returnArrow = RETURN_ARROW
+const router = useRouter()
+
+const title = router.currentRoute.value.params.scan as string
 
 onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
+.scanPage_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
 .scanPage {
   position: relative;
   z-index: 1;
-  padding: 60px 25px;
+  padding: 30px 25px;
 
   &_style {
     font-size: $fs-lg;

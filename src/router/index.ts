@@ -5,6 +5,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'Home',
+      component: () => import(/* webpackChunkName: "chapters" */ '../views/HomeView.vue'),
+    },
+    {
+      path: '/:scan',
       name: 'ChaptersPage',
       component: () => import(/* webpackChunkName: "chapters" */ '../views/ChaptersPage.vue'),
     },

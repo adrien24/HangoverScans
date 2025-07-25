@@ -1,6 +1,6 @@
 // chapterRow.controller.ts
 
-type Chapter = {
+export type Chapter = {
   chapter: number
   title: string
 }
@@ -60,16 +60,16 @@ export class ChapterRowController {
     this.chapitersFiltered = [...selectedChunk]
   }
 
-  public isChapterFinished(chapterId: number): boolean {
-    const chapterStorage = JSON.parse(localStorage.getItem(`scans-OnePiece`) || '[]')
+  public isChapterFinished(title: string, chapterId: number): boolean {
+    const chapterStorage = JSON.parse(localStorage.getItem(`scans-${title}`) || '[]')
     return chapterStorage.some(
       (res: { chapter: number; pages: number; finished: 'reading' | 'read' }) =>
         res.chapter === chapterId && res.finished === 'read',
     )
   }
 
-  public isChapterUnread(chapterId: number): boolean {
-    const chapterStorage = JSON.parse(localStorage.getItem(`scans-OnePiece`) || '[]')
+  public isChapterUnread(title: string, chapterId: number): boolean {
+    const chapterStorage = JSON.parse(localStorage.getItem(`scans-${title}`) || '[]')
     return !chapterStorage.some(
       (res: { chapter: number; pages: number; finished: 'reading' | 'read' }) =>
         res.chapter === chapterId && (res.finished === 'reading' || res.finished === 'read'),

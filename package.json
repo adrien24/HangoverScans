@@ -24,6 +24,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@primeuix/themes": "^1.1.2",
+    "@splidejs/vue-splide": "^0.6.12",
     "@supabase/supabase-js": "^2.49.4",
     "dotenv": "^16.5.0",
     "pinia": "^3.0.1",

@@ -5,11 +5,7 @@
     </div>
     <div :class="{ fadeOut: controller.isReading }" v-if="!controller.isReading">
       <div class="scans_title" v-if="controller.titleScan">
-        {{
-          controller.titleScan !== 'Nom à venir'
-            ? `One Piece : ${controller.titleScan}`
-            : 'One Piece'
-        }}
+        {{ controller.titleScan !== 'Nom à venir' ? `${scans} : ${controller.titleScan}` : scans }}
       </div>
       <div class="scans_title" v-else>One Piece</div>
     </div>
@@ -23,6 +19,7 @@
       v-if="pages !== null"
       :modules="[Keyboard, Zoom]"
       :keyboard="{ enabled: true }"
+      :lazy="true"
       :loop="false"
       :spaceBetween="10"
       :slidesPerView="1"
@@ -34,14 +31,14 @@
       @slideChange="handleSlide"
     >
       <swiper-slide v-for="(page, index) in controller.imagesScans" :key="index">
-        <div class="swiper-zoom-container" v-if="page.loaded">
-          <img
-            :src="page.url"
-            class="page-image"
-            :alt="`OnePiece page ${index}`"
-            @load="onImageLoaded"
-          />
-        </div>
+        <img
+          :src="`https://hangoverscans.fr/images.php?url=${page.url}`"
+          class="page-image"
+          :alt="`OnePiece page ${index}`"
+          @load="onImageLoaded"
+          loading="lazy"
+        />
+        <div class="swiper-lazy-preloader"></div>
       </swiper-slide>
     </swiper>
     <div
@@ -68,7 +65,7 @@ import Skeleton from 'primevue/skeleton'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Swiper as SwiperTypes } from 'swiper/types'
-import { Keyboard, Zoom } from 'swiper/modules'
+import { Keyboard, Zoom, Lazy } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/zoom'
 
@@ -86,24 +83,7 @@ const isLoaded = ref(false)
 
 onMounted(async () => {
   await controller.setup()
-  pages.value = controller.setPagesScans('OnePiece', parseInt(id))
-  controller.imagesScans.forEach((image, index) => {
-    const img = new Image()
-    img.src = image.url
-
-    img.onload = () => {
-      if (controller.imagesScans[index]) {
-        controller.imagesScans[index].loaded = true // Assure la réactivité si 'loaded' est défini dans l'objet
-      }
-      if (controller.imagesScans.every((page) => page.loaded)) {
-        isLoaded.value = true
-      }
-    }
-
-    img.onerror = () => {
-      console.error(`Erreur lors du chargement de l'image ${index + 1}`)
-    }
-  })
+  pages.value = controller.setPagesScans(scans, parseInt(id))
 })
 
 const onImageLoaded = () => {

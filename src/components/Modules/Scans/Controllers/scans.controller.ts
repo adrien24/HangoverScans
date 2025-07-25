@@ -35,6 +35,7 @@ export class ScansController {
     this.scans = await this.getChapter()
 
     this.imagesScans = this.scans.images.map((img) => ({ url: img, loaded: false }))
+
     this.titleScan = this.scans.title
   }
 

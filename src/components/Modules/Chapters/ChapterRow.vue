@@ -24,7 +24,7 @@
         v-for="chapter in controller.chapitersFiltered.sort((a, b) => b.chapter - a.chapter)"
         :key="chapter.title"
         :id="String(chapter.chapter)"
-        @click="goToScans('One Piece', chapter.chapter)"
+        @click="goToScans(chapter.chapter)"
       >
         <div class="chapterRow_row">
           <p class="chapterRow__number">{{ chapter.chapter }}</p>
@@ -33,8 +33,8 @@
         <font-awesome-icon
           :icon="['fas', 'check']"
           :class="{
-            finished: controller.isChapterFinished(chapter.chapter),
-            unread: controller.isChapterUnread(chapter.chapter),
+            finished: controller.isChapterFinished(title, chapter.chapter),
+            unread: controller.isChapterUnread(title, chapter.chapter),
           }"
         />
       </div>
@@ -44,20 +44,24 @@
 
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
-import { ChapterRowController } from './Controllers/chapterRow.controller'
+import { ChapterRowController, type Chapter } from './Controllers/chapterRow.controller'
 import { getAllChapters } from './services/chapters.services'
 import DsMultiselect from '@/components/DsSystem/DsMultiselect.vue'
 import Skeleton from 'primevue/skeleton'
 import { useRouter } from 'vue-router'
-const router = useRouter()
 
-const controller = reactive(new ChapterRowController(() => getAllChapters()))
+const router = useRouter()
+const title = router.currentRoute.value.params.scan as string
+
+const controller = reactive(
+  new ChapterRowController((): Promise<Chapter[]> => getAllChapters(title)),
+)
 
 onMounted(async () => {
   await controller.setup()
 })
 
-const goToScans = (title: string, id: number) => {
+const goToScans = (id: number) => {
   router.push({
     path: `/scans/${title}/${id}`,
   })
