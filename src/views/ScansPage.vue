@@ -19,8 +19,8 @@
       v-if="pages !== null"
       :modules="[Keyboard, Zoom]"
       :keyboard="{ enabled: true }"
-      :lazy="true"
       :loop="false"
+      :lazy="true"
       :spaceBetween="10"
       :slidesPerView="1"
       :initialSlide="pages"
@@ -32,13 +32,16 @@
     >
       <swiper-slide v-for="(page, index) in controller.imagesScans" :key="index">
         <img
-          :src="`https://hangoverscans.fr/images.php?url=${page.url}`"
+          :src="
+            page.url.includes('lelmanga')
+              ? `https://hangoverscans.fr/images.php?url=${page.url}&t=${Date.now()}`
+              : page.url
+          "
           class="page-image"
           :alt="`OnePiece page ${index}`"
           @load="onImageLoaded"
           loading="lazy"
         />
-        <div class="swiper-lazy-preloader"></div>
       </swiper-slide>
     </swiper>
     <div
@@ -65,7 +68,7 @@ import Skeleton from 'primevue/skeleton'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Swiper as SwiperTypes } from 'swiper/types'
-import { Keyboard, Zoom, Lazy } from 'swiper/modules'
+import { Keyboard, Zoom } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/zoom'
 
@@ -166,6 +169,12 @@ const handleSlide = (event: SwiperTypes) => {
     width: 95%;
     object-fit: cover;
     transition: all 0.5s ease;
+    transform: translateY(20%);
+    margin-left: 2.5%;
   }
+}
+
+.page-image {
+  margin-left: 10.5%;
 }
 </style>
