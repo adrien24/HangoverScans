@@ -11,7 +11,7 @@ import UpdateBanner from '@/components/DsSystem/DsUpdateBanner.vue'
 #app {
   position: relative;
   background-color: #09172b;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 
