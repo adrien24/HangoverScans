@@ -14,11 +14,6 @@ const router = createRouter({
       component: () => import(/* webpackChunkName: "chapters" */ '../views/ChaptersPage.vue'),
     },
     {
-      path: '/scans/:scans/:id',
-      name: 'ScansPage',
-      component: () => import(/* webpackChunkName: "scans" */ '../views/ScansPage.vue'),
-    },
-    {
       path: '/scans/:scans/:id/ereader',
       name: 'EreaderPage',
       component: () => import(/* webpackChunkName: "scans" */ '../views/EreaderPage.vue'),

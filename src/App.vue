@@ -1,10 +1,8 @@
-<script setup lang="ts">
-import UpdateBanner from '@/components/DsSystem/DsUpdateBanner.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <RouterView />
-  <UpdateBanner />
+  <DsUpdateBanner />
 </template>
 
 <style lang="scss">

@@ -19,18 +19,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@primeuix/themes": "^1.1.2",
-    "@splidejs/vue-splide": "^0.6.12",
     "@supabase/supabase-js": "^2.49.4",
     "dotenv": "^16.5.0",
     "pinia": "^3.0.1",
     "primevue": "^4.3.5",
     "sass": "^1.87.0",
-    "swiper": "^11.2.6",
     "vue": "^3.5.13",
     "vue-multiselect": "^3.2.0",
     "vue-router": "^4.5.0"

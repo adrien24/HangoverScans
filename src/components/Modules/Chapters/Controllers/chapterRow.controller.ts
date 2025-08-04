@@ -26,6 +26,8 @@ export class ChapterRowController {
 
   async setup() {
     this.chapters = await this.getAllChapters()
+    this.chapters.sort((a, b) => a.chapter - b.chapter)
+
     this.chapitersFilter = this.chunkArray(this.chapters, 50)
     this.selectedChaptersArray()
     this.chapitersFiltered = this.chapitersFilter[0]

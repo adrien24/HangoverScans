@@ -30,8 +30,7 @@
           <p class="chapterRow__number">{{ chapter.chapter }}</p>
           <p class="chapterRow__title">{{ chapter.title }}</p>
         </div>
-        <font-awesome-icon
-          :icon="['fas', 'check']"
+        <DsCheckIcon
           :class="{
             finished: controller.isChapterFinished(title, chapter.chapter),
             unread: controller.isChapterUnread(title, chapter.chapter),
@@ -63,7 +62,7 @@ onMounted(async () => {
 
 const goToScans = (id: number) => {
   router.push({
-    path: `/scans/${title}/${id}`,
+    path: `/scans/${title}/${id}/ereader`,
   })
 }
 </script>

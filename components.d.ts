@@ -9,7 +9,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ChapterRow: typeof import('./src/components/Modules/Chapters/ChapterRow.vue')['default']
+    DsBackButton: typeof import('./src/components/DsSystem/DsBackButton.vue')['default']
+    DsButton: typeof import('./src/components/DsSystem/DsButton.vue')['default']
+    DsCheckIcon: typeof import('./src/components/DsSystem/DsCheckIcon.vue')['default']
     DsMultiselect: typeof import('./src/components/DsSystem/DsMultiselect.vue')['default']
+    DsSlider: typeof import('./src/components/DsSystem/DsSlider.vue')['default']
     DsUpdateBanner: typeof import('./src/components/DsSystem/DsUpdateBanner.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
