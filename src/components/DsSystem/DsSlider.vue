@@ -35,22 +35,28 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { onMounted, reactive, ref, onBeforeUnmount } from 'vue'
+import { onMounted, ref, onBeforeUnmount, watch } from 'vue'
 import Skeleton from 'primevue/skeleton'
+import type { ScansController } from '../Modules/Scans/Controllers/scans.controller'
 
-import { ScansController } from '@/components/Modules/Scans/Controllers/scans.controller'
-import { getAllScans } from '@/components/Modules/Scans/services/scans.services'
+const { controller, scans, id } = defineProps<{
+  controller: ScansController
+  scans: string
+  id: string
+}>()
 
-/** Route et données */
-const route = useRoute()
-const id = route.params.id as string
-const scans = route.params.scans as string
+const activeIndex = ref(0) // ou injecté d'ailleurs
 
-/** États */
-const controller = reactive(new ScansController(() => getAllScans(id, scans)))
+// Émettre l'événement
+const emit = defineEmits(['last-slide-reached'])
+
+watch(activeIndex, (newIndex) => {
+  if (newIndex === controller.imagesScans.length - 1) {
+    emit('last-slide-reached')
+  }
+})
+
 const pages = ref<number | null>(null)
-const activeIndex = ref(0)
 
 /** Zoom navigateur (pinch) */
 const isPageZoomed = ref(false)

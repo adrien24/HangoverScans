@@ -1,6 +1,4 @@
 export const getAllChapters = async (id?: string) => {
-  console.log(id)
-
   const response = await fetch('https://ajtyenefvkagyajggfrv.functions.supabase.co/get-chapters', {
     method: 'POST',
     headers: {

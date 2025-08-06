@@ -1,5 +1,5 @@
 <template>
-  <div class="backButton" @click="$router.go(-1)">
+  <div class="backButton">
     <div class="backButton_up"></div>
     <div class="backButton_down"></div>
   </div>

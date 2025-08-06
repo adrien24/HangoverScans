@@ -1,4 +1,4 @@
 {
-  "version": "1.3.0",
-  "features": ["✨ On peut maintenant zoomer sur les scans !"]
+  "version": "1.3.1",
+  "features": ["📖 Ajout d'un bouton pour passer au chapitre suivant sur la liseuse"]
 }

@@ -2,7 +2,7 @@
 
 <template>
   <RouterView />
-  <DsUpdateBanner />
+  <UpdateBanner />
 </template>
 
 <style lang="scss">

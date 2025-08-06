@@ -7,6 +7,11 @@ type Chapter = {
   images: string[]
 }
 
+export type allChaptersResponse = {
+  chapter: number
+  title: string
+}
+
 export class ScansController {
   public scans: Chapter = {
     id: 0,
@@ -15,9 +20,10 @@ export class ScansController {
     images: [],
   }
   public isReading: boolean = false
-
   public imagesScans: { url: string; loaded: boolean }[] = []
   public titleScan: string = ''
+  public showHeader: boolean = false
+  public isNextChapterAvailable: boolean = true
 
   public getChapter: () => Promise<Chapter> // ou le bon type de retour
 
@@ -37,6 +43,11 @@ export class ScansController {
     this.imagesScans = this.scans.images.map((img) => ({ url: img, loaded: false }))
 
     this.titleScan = this.scans.title
+  }
+
+  public toggleHeader() {
+    console.log('Toggle header visibility')
+    this.showHeader = !this.showHeader
   }
 
   public updateHistoryPages(
@@ -66,5 +77,17 @@ export class ScansController {
     const index = this.historyParsed.findIndex((item) => item.chapter === chapter)
 
     return this.historyParsed[index] ? this.historyParsed[index].pages : 0
+  }
+
+  public nextChapterAvailable = (id: string, allChapters: allChaptersResponse[]) => {
+    const nextChapter = parseInt(id) + 1
+    this.isNextChapterAvailable =
+      nextChapter <= allChapters.length &&
+      allChapters.some((chapter) => chapter.chapter === nextChapter)
+
+    if (!this.isNextChapterAvailable) {
+      console.warn('No more chapters available')
+      return
+    }
   }
 }

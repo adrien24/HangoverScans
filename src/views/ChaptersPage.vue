@@ -2,7 +2,14 @@
   <div class="scanPage">
     <div class="scanPage_header">
       <span class="scanPage_style">Shonen</span>
-      <img :src="returnArrow" @click="$router.go(-1)" />
+      <img
+        :src="returnArrow"
+        @click="
+          $router.push({
+            path: `/`,
+          })
+        "
+      />
     </div>
 
     <h1>{{ title }}</h1>
