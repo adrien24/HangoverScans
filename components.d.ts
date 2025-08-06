@@ -12,6 +12,7 @@ declare module 'vue' {
     DsBackButton: typeof import('./src/components/DsSystem/DsBackButton.vue')['default']
     DsButton: typeof import('./src/components/DsSystem/DsButton.vue')['default']
     DsCheckIcon: typeof import('./src/components/DsSystem/DsCheckIcon.vue')['default']
+    DsMenu: typeof import('./src/components/DsSystem/DsMenu.vue')['default']
     DsMultiselect: typeof import('./src/components/DsSystem/DsMultiselect.vue')['default']
     DsSlider: typeof import('./src/components/DsSystem/DsSlider.vue')['default']
     DsUpdateBanner: typeof import('./src/components/DsSystem/DsUpdateBanner.vue')['default']

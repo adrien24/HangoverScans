@@ -24,6 +24,8 @@ export class ScansController {
   public titleScan: string = ''
   public showHeader: boolean = false
   public isNextChapterAvailable: boolean = true
+  public menuItems: ['Lecture verticale/horizontale'] = ['Lecture verticale/horizontale']
+  public isSlider: boolean = true
 
   public getChapter: () => Promise<Chapter> // ou le bon type de retour
 
@@ -88,6 +90,20 @@ export class ScansController {
     if (!this.isNextChapterAvailable) {
       console.warn('No more chapters available')
       return
+    }
+  }
+  public scansOrientation(scanName: string) {
+    localStorage.setItem(`scans-orientation-${scanName}`, this.isSlider ? 'notSlider' : 'slider')
+
+    const orientation = localStorage.getItem(`scans-orientation-${scanName}`)
+
+    return orientation
+  }
+
+  public menuItemsClicked(event: string, scans: string) {
+    if (event === 'Lecture verticale/horizontale') {
+      this.isSlider = !this.isSlider
+      this.scansOrientation(scans)
     }
   }
 }

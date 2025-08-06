@@ -3,15 +3,41 @@
     <div class="scan_header">
       <DsBackButton class="scan_header_button" @click="backToChapter()" />
       <h3 class="scan_header_title">Chapitre {{ id }}</h3>
+      <div class="scan_header_menu">
+        <DsMenu
+          :items="controller.menuItems"
+          @itemsMenuClicked="controller.menuItemsClicked($event, scans)"
+        />
+      </div>
     </div>
   </Teleport>
   <DsSlider
+    v-if="!controller.isSlider"
     @click="controller.toggleHeader()"
     :controller
     :scans
     :id
     @last-slide-reached="controller.nextChapterAvailable(id, allChapters)"
   />
+  <div class="scan_one_column" v-else @click="controller.toggleHeader()">
+    <div class="scan_one_column_container">
+      <div class="scan_one_column_content">
+        <div class="scan_one_column_image">
+          <img
+            v-for="(page, index) in controller.imagesScans"
+            :key="index"
+            :src="
+              page.url.includes('lelmanga') || page.url.includes('anime-sama.fr')
+                ? `https://hangoverscans.fr/compressImage.php?imgurl=${page.url}&noresize=1`
+                : page.url
+            "
+            class="page-image"
+            :alt="`${scans} page ${index}`"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
   <Teleport to="body" v-if="controller.showHeader">
     <DsButton title="Chapitre suivant" @click="nextChapter()" class="scan_header_button-bottom" />
   </Teleport>
@@ -39,14 +65,17 @@ const controller = reactive(new ScansController(() => getAllScans(id, scans)))
 onMounted(async () => {
   allChapters.value = await getAllChapters(scans)
   await controller.setup()
+
+  controller.isSlider = localStorage.getItem(`scans-orientation-${scans}`) === 'notSlider'
 })
 
 const nextChapter = () => {
+  if (localStorage.getItem(`scans-orientation-${scans}`) === 'notSlider')
+    controller.updateHistoryPages(scans, parseInt(id), controller.imagesScans.length, 'read')
+
   const nextChapter = parseInt(id) + 1
-  console.log(`Next chapter ID: ${nextChapter}, Total chapters: ${allChapters.value.length}`)
 
   if (nextChapter > allChapters.value.length) {
-    console.warn('No more chapters available')
     return
   }
   router.push({
@@ -68,20 +97,22 @@ const backToChapter = () => {
 
 <style lang="scss">
 .scan_header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50% 0 15px;
+  padding: 0 15px 0 15px;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.scan_header_title {
-  transform: translateX(50%);
-  width: 100%;
-  text-align: center;
+.scan_header_menu {
+  width: 52px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .scan_header_button {
@@ -93,6 +124,15 @@ const backToChapter = () => {
     right: 0;
     transform: translateX(-10%);
     z-index: 10;
+  }
+}
+
+.scan_one_column_image {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  img {
+    max-width: 100%;
   }
 }
 </style>
